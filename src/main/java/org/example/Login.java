@@ -1,21 +1,17 @@
 package org.example;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
-
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 
-public class Main {
-
+public class Login {
     public WebDriver driver;
 
     @BeforeSuite
@@ -34,7 +30,7 @@ public class Main {
     }
 
     @Test
-    public void chromeTest() {
+    public void positiveLogin() {
 
         driver.get("https://www.saucedemo.com");
         driver.manage().window().maximize();
@@ -49,33 +45,37 @@ public class Main {
         buttonSubmit.click();
 
         String expectedTitle = "PRODUCTS";
-        String actualTitle =
+        String obtainedTitle =
                 driver.findElement(By.className("header_secondary_container"))
                         .findElement(By.className("title"))
                         .getText()
                         .toUpperCase();
 
-        String expectedTextButton = "ADD TO CART";
-        String actualTextButton =
-                driver.findElement(By.id("add-to-cart-sauce-labs-backpack"))
-                        .getText()
-                        .toUpperCase();;
+        Assert.assertEquals(expectedTitle, obtainedTitle);
+        driver.close();
+    }
 
-       // System.out.println(actualTitle);
-        WebElement clickOnButtonAddCart =
-                driver.findElement(By.xpath("//*[@id=\"add-to-cart-sauce-labs-backpack\"]"));
-        clickOnButtonAddCart.click();
+    @Test
+    public void negativeLogin() {
 
-        String expectedTextAfterClickOnButton = "REMOVE";
-        String actualTextAfterClickOnButton =
-                driver.findElement(By.id("remove-sauce-labs-backpack"))
-                        .getText()
-                        .toUpperCase();
-        //System.out.println(actualTextAfterClickOnButton);
+        driver.get("https://www.saucedemo.com");
+        driver.manage().window().maximize();
 
-        Assert.assertEquals(expectedTitle, actualTitle);
-        Assert.assertEquals(expectedTextButton, actualTextButton);
-        Assert.assertEquals(expectedTextAfterClickOnButton, actualTextAfterClickOnButton);
+        WebElement userInput = driver.findElement(By.xpath("//*[@id=\"user-name\"]"));
+        userInput.sendKeys("standard_user");
+
+        WebElement passwordInput = driver.findElement(By.xpath("//*[@id=\"password\"]"));
+        passwordInput.sendKeys(" ");
+
+        WebElement buttonSubmit = driver.findElement(By.xpath(("//*[@id=\"login-button\"]")));
+        buttonSubmit.click();
+
+        String expectedTitle = "Epic sadface: Username and password do not match any user in this service";
+        String obtainedTitle =
+                driver.findElement(By.xpath("//*[@id=\"login_button_container\"]/div/form/div[3]/h3"))
+                        .getText();
+
+        Assert.assertEquals(expectedTitle, obtainedTitle);
         driver.close();
     }
 }
