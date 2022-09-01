@@ -2,20 +2,31 @@
 
 ## Documentation
 
-This example implements TestNG library, so you can select 
-the driver you want as well. Browser is configured as default
+This example implements TestNG in Selenium-java, so you can select 
+the web driver you want as well. The browser is configured as default
 with Chrome.
+
+The configuration is located in the path: 
+
+    ./src/main/java/org.example/InstallWebDrivers.java
+## Download from Maven Libraries and install dependencies
+
+Go to -> "File" -> "Project structure" -> "New project library" -> "From Maven"
+... and then download/install the following libraries
+as its describes bellow:
+
+* org.seleniumhq.selenium:selenium-java
+* io.github.bonigarcia:webdrivermanager
+* org.junit.jupiter:junit-jupiter
+* com.tesults.testng:tesults.testng
 
 ## Run the test
 
-Run Main.chromeTest or enter shift+F10 on keyboard to start the test.
+Run a particular test or press shift+F10 keys to start the test.
+You may be able to execute as mode debug or just run it. So you can select the mode and run
+as following bellow:
 
-## Install Libraries
+Enter at Login.java or Main.java files located in the path: 
 
-Go to project structure -> "New project library" and then search as its describes bellow:
-
-seleniumhq.selenium --> seleniumhq.selenium-java
-io.github.bonigarcia --> io.github.bonigarcia:webdrivermanager
-testng: com.testng
-
-Finally install all dependencies.
+    ./src/main/java/org.example
+After that, right click in some test method and select run or debug mode.
