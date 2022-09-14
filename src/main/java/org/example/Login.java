@@ -3,6 +3,7 @@ package org.example;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -21,7 +22,8 @@ public class Login {
 
     @BeforeTest
     public void setup() {
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        driver = new ChromeDriver(chromeOptions);
     }
 
     @AfterTest
@@ -45,13 +47,13 @@ public class Login {
         buttonSubmit.click();
 
         String expectedTitle = "PRODUCTS";
-        String obtainedTitle =
+        String actualTitle =
                 driver.findElement(By.className("header_secondary_container"))
                         .findElement(By.className("title"))
                         .getText()
                         .toUpperCase();
 
-        Assert.assertEquals(expectedTitle, obtainedTitle);
+        Assert.assertEquals(expectedTitle, actualTitle);
         driver.close();
     }
 
@@ -71,11 +73,11 @@ public class Login {
         buttonSubmit.click();
 
         String expectedTitle = "Epic sadface: Username and password do not match any user in this service";
-        String obtainedTitle =
+        String actualTitle =
                 driver.findElement(By.xpath("//*[@id=\"login_button_container\"]/div/form/div[3]/h3"))
                         .getText();
 
-        Assert.assertEquals(expectedTitle, obtainedTitle);
+        Assert.assertEquals(expectedTitle, actualTitle);
         driver.close();
     }
 }
